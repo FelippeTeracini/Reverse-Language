@@ -11,7 +11,7 @@ COMMAND = DEFINE_VAR | CALL_FUNC | PRINT | RETURN
     
 IF = "fi", ")", RELEX, "(", "}", COMMAND, {COMMAND}, "{", {ELIF | ELSE};
 
-ELIF = "file", ")", RELEX, "(", COMMAND, {COMMAND}, "{", {ELIF | ELSE};
+ELIF = "file", ")", RELEX, "(", "}", COMMAND, {COMMAND}, "{", {ELIF | ELSE};
 
 ELSE = "esle", "}", COMMAND, {COMMAND}, "{";
 
@@ -52,7 +52,7 @@ IDENTIFIER = LETTER, { (LETTER | DIGIT | "_") };
 
 CHARACTER = SPECIAL | LETTER | DIGIT;
 
-BOOL = "true" | "false";
+BOOL = "eurt" | "eslaf";
 
 SPECIAL = ":" | "*" | ")" | "(" | "\" | "|" | "/"
         | "+" | "-" | "_" | "&" | "^" | "%" | "$"

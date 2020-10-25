@@ -1,0 +1,169 @@
+%{
+  #include <stdio.h>
+  extern void yyerror();
+  extern int yylex();
+  extern char* yytext;
+  extern int yylineno;
+%}
+
+%define parse.lac full
+%define parse.error verbose
+
+%union{
+	char* dataType;
+	char charVal;
+	int intVal;
+	float floatVal;
+	char* strVal;
+}
+
+%token QUOTES
+%token DEFINE
+%token SEMI_COLUMN
+%token COMMA
+%token OPEN_P
+%token CLOSE_P
+%token OPEN_B
+%token CLOSE_B
+%token DEF
+%token RETURN
+%token INPUT
+%token WHILE
+%token IF
+%token ELIF
+%token ELSE
+%token AND
+%token OR
+%token PRINT
+%token TRUE
+%token FALSE
+%token EQUALS
+%token NOT
+%token LESS
+%token MORE
+%token LESS_E
+%token MORE_E
+%token PLUS
+%token MINUS
+%token MULT
+%token DIV
+%token REST
+%token DIV_INT
+%token POW
+%token <dataType> DATA_TYPE
+%token <charVal> CHARACTER_VALUE
+%token <intVal> INTEGER_VALUE
+%token <floatVal> FLOAT_VALUE
+%token <strVal> STRING_VALUE
+%token <strVal> IDENTIFIER_VALUE
+
+/* Nao terminais */
+%type <strVal> PROGRAM
+%type <strVal> COMMAND
+%type <strVal> COMMAND_R
+%type <strVal> IF_N
+%type <strVal> ELIF_N
+%type <strVal> ELSE_N
+%type <strVal> WHILE_N
+%type <strVal> DEFINE_FUNC
+%type <strVal> RETURN_N
+%type <strVal> PRINT_N
+%type <strVal> DEFINE_VAR
+%type <strVal> RELEX
+%type <strVal> EXPRESSION
+%type <strVal> TERM
+%type <strVal> INPUT
+%type <strVal> CALL_FUNC
+%type <strVal> CALL_FUNC_ARGS
+%type <strVal> DEF_FUNC_ARGS
+%type <strVal> BOOL
+%type <strVal> INPUT_N
+
+%%
+
+PROGRAM: | COMMAND_R;
+
+COMMAND:  DEFINE_VAR
+        | CALL_FUNC   
+		| PRINT_N     
+		| RETURN_N    
+		| DEFINE_FUNC 
+		| WHILE_N     
+		| IF_N; 
+
+COMMAND_R = COMMAND | COMMAND COMMAND_R;
+
+IF_N: IF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B
+	| IF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B ELIF_N
+	| IF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B ELSE_N;
+
+ELIF_N: ELIF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B
+	  | ELIF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B ELIF_N
+	  | ELIF OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B ELSE_N;
+
+ELSE_N: ELSE OPEN_B COMMAND_R CLOSE_B;
+
+WHILE_N: WHILE OPEN_P RELEX CLOSE_P OPEN_B COMMAND_R CLOSE_B;
+
+DEFINE_FUNC: DEF IDENTIFIER_VALUE OPEN_P DEF_FUNC_ARGS CLOSE_P OPEN_B COMMAND_R CLOSE_B;
+
+RETURN_N: RETURN RELEX SEMI_COLUMN;
+
+PRINT_N: PRINT RELEX SEMI_COLUMN;
+
+DEFINE_VAR: IDENTIFIER_VALUE DEFINE RELEX SEMI_COLUMN;
+
+RELEX: EXPRESSION
+	 | EXPRESSION EQUALS EXPRESSION
+	 | EXPRESSION MORE EXPRESSION
+	 | EXPRESSION LESS EXPRESSION
+	 | EXPRESSION MORE_E EXPRESSION
+	 | EXPRESSION LESS_E EXPRESSION;
+
+EXPRESSION: TERM
+		  | TERM PLUS TERM
+		  | TERM MINUS TERM
+		  | TERM OR TERM;
+
+TERM: FACTOR
+	| FACTOR MULT FACTOR
+	| FACTOR DIV FACTOR
+	| FACTOR REST FACTOR
+	| FACTOR DIV_INT FACTOR
+	| FACTOR POW FACTOR
+	| FACTOR AND FACTOR;
+
+FACTOR: INTEGER_VALUE FACTOR
+	  | FLOAT_VALUE FACTOR
+	  | STRING_VALUE FACTOR
+	  | BOOL FACTOR
+	  | PLUS FACTOR
+	  | MINUS FACTOR
+	  | NOT FACTOR
+	  | OPEN_P RELEX CLOSE_P
+	  | IDENTIFIER_VALUE
+	  | CALL_FUNC
+	  | INPUT_N;
+
+INPUT_N: INPUT OPEN_P CLOSE_P;
+
+CALL_FUNC: IDENTIFIER_VALUE OPEN_P CALL_FUNC_ARGS CLOSE_P;
+
+CALL_FUNC_ARGS:
+			  | RELEX
+			  | RELEX COMMA RELEX;
+
+DEF_FUNC_ARGS:
+			 | IDENTIFIER_VALUE
+			 | IDENTIFIER_VALUE COMMA IDENTIFIER_VALUE;
+
+BOOL: TRUE | FALSE;
+%%
+
+int main(){
+
+  yyparse();
+  printf("No Errors!!\n");
+  return 0;
+}
+
