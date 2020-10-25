@@ -1,0 +1,23 @@
+a = tupni)(;
+fi)a =< 2(}
+    b = 0;
+    elihw)b > 2(}
+        tnirp)"salve"(;
+        b = b + 1;
+    {
+{
+fed func)c, d(}
+    fi)c ro d(}
+        tnirp)"or"(;
+    {
+    file)c dna d(}
+        tnirp)"and"(;
+    {
+    esle}
+        tnirp)"esle"(;
+    {
+    nruter;
+{
+e = 2.2 * 5.4;
+f = eurt;
+g = func)e, f(;

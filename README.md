@@ -19,9 +19,9 @@ WHILE = "elihw", ")", RELEX, "(", "}", COMMAND, {COMMAND}, "{"
 
 DEFINE_FUNC = "fed", IDENTIFIER, ")", DEF_FUNC_ARGS, "(", "}", COMMAND, {COMMAND}, "{";
 
-RETURN = "nruter", RELEX, ";";
+RETURN = "nruter", ((RELEX, ";") | ";");
 
-PRINT = "tnirp", RELEX, ";"; 
+PRINT = "tnirp", ")", RELEX, "(", ";"; 
 
 DEFINE_VAR = IDENTIFIER, "=", "RELEX", ";";
 

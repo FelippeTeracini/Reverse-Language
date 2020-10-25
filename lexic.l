@@ -11,7 +11,7 @@ whitespace      [ \t\r\v\f]
 linefeed        \n
 
 %%
-"""												{return QUOTES;}
+""\"											{return QUOTES;}
 "="												{return DEFINE;}
 ";"												{return	SEMI_COLUMN;}
 ","												{return	COMMA;}
@@ -40,9 +40,9 @@ linefeed        \n
 "+"												{return	PLUS;}
 "-"												{return MINUS;}
 "*"												{return MULT;}
-"\"												{return DIV;}
+"\\"											{return DIV;}
 "%"												{return REST;}
-"\\"											{return DIV_INT;}
+"\\\\"											{return DIV_INT;}
 "^"											    {return POW;}
 [\"][a-zA-Z][\"]								{yylval.charVal = yytext[1]; return CHARACTER_VALUE;}
 [0-9]+                                          {yylval.intVal = atoi(yytext); return INTEGER_VALUE;}
