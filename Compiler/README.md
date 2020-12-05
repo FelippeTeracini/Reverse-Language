@@ -1,5 +1,4 @@
-# Compilador
-Compilador
+# Compiler
 
 # EBNF
 
