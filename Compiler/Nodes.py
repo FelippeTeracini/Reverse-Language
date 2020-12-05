@@ -23,20 +23,20 @@ class BinOp(Node):
         children1 = self.children[1].evaluate(symbol_table)
 
         if self.value == "+":
-            if(children0[1] != 'String' and children1[1] != 'String'):
-                return [children0[0] + children1[0], 'Int']
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
+                return [children0[0] + children1[0], 'tnI']
             else:
-                raise ValueError('+ Operation not valid for String')
+                raise ValueError('+ Operation not valid for gnirtS')
 
         elif self.value == "-":
-            if(children0[1] != 'String' and children1[1] != 'String'):
-                return [children0[0] - children1[0], 'Int']
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
+                return [children0[0] - children1[0], 'tnI']
             else:
-                raise ValueError('- Operation not valid for String')
+                raise ValueError('- Operation not valid for gnirtS')
 
         elif self.value == "*":
-            if(children0[1] != 'String' and children1[1] != 'String'):
-                return [children0[0] * children1[0], 'Int']
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
+                return [children0[0] * children1[0], 'tnI']
             else:
                 if(children0[1] == 'looB'):
                     if(children0[0] == 1):
@@ -50,31 +50,31 @@ class BinOp(Node):
                     elif(children1[0] == 0):
                         children1[0] = 'eslaf'
 
-                return [str(children0[0]) + str(children1[0]), 'String']
+                return [str(children0[0]) + str(children1[0]), 'gnirtS']
 
         elif self.value == "\\":
-            if(children0[1] != 'String' and children1[1] != 'String'):
-                return [int(children0[0] / children1[0]), 'Int']
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
+                return [int(children0[0] / children1[0]), 'tnI']
             else:
-                raise ValueError('\\ Operation not valid for String')
+                raise ValueError('\\ Operation not valid for gnirtS')
 
         elif self.value == "||":
-            if(children0[1] != 'String' and children1[1] != 'String'):
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
                 if(children0[0] or children1[0]):
                     return [1, 'looB']
                 else:
                     return [0, 'looB']
             else:
-                raise ValueError('|| Operation not valid for String')
+                raise ValueError('|| Operation not valid for gnirtS')
 
         elif self.value == "&&":
-            if(children0[1] != 'String' and children1[1] != 'String'):
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
                 if(children0[0] and children1[0]):
                     return [1, 'looB']
                 else:
                     return [0, 'looB']
             else:
-                raise ValueError('&& Operation not valid for String')
+                raise ValueError('&& Operation not valid for gnirtS')
 
         elif self.value == "==":
             if(children0[0] == children1[0]):
@@ -82,23 +82,23 @@ class BinOp(Node):
             else:
                 return [0, 'looB']
 
-        elif self.value == ">":
-            if(children0[1] != 'String' and children1[1] != 'String'):
+        elif self.value == "<":
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
                 if(children0[0] > children1[0]):
                     return [1, 'looB']
                 else:
                     return [0, 'looB']
             else:
-                raise ValueError('> Operation not valid for String')
+                raise ValueError('> Operation not valid for gnirtS')
 
-        elif self.value == "<":
-            if(children0[1] != 'String' and children1[1] != 'String'):
+        elif self.value == ">":
+            if(children0[1] != 'gnirtS' and children1[1] != 'gnirtS'):
                 if(children0[0] < children1[0]):
                     return [1, 'looB']
                 else:
                     return [0, 'looB']
             else:
-                raise ValueError('< Operation not valid for String')
+                raise ValueError('< Operation not valid for gnirtS')
 
 
 class UnOp(Node):
@@ -109,10 +109,10 @@ class UnOp(Node):
     def evaluate(self, symbol_table):
         evl = self.children[0].evaluate(symbol_table)
         if self.value == "+":
-            return [evl[0], 'Int']
+            return [evl[0], 'tnI']
 
         elif self.value == "-":
-            return [- evl[0], 'Int']
+            return [- evl[0], 'tnI']
 
         elif self.value == "!":
             if(not evl[0]):
@@ -127,7 +127,7 @@ class IntVal(Node):
         self.value = value
 
     def evaluate(self, symbol_table):
-        return [self.value, 'Int']
+        return [self.value, 'tnI']
 
 
 class BoolVal(Node):
@@ -150,7 +150,7 @@ class StringVal(Node):
         self.value = value
 
     def evaluate(self, symbol_table):
-        return [self.value, 'String']
+        return [self.value, 'gnirtS']
 
 
 class NoOp(Node):
@@ -173,8 +173,6 @@ class Assignement(Node):
             symbol_table.set_symbol(
                 self.children[0].value, evl[0])
         else:
-            print(s_type)
-            print(evl[1])
             raise ValueError('Incompatible symbol type and value')
 
 
@@ -229,7 +227,7 @@ class ReadLine(Node):
         pass
 
     def evaluate(self, symbol_table):
-        return [int(input()), 'Int']
+        return [int(input()), 'tnI']
 
 
 class While(Node):
@@ -247,14 +245,14 @@ class If(Node):
 
     def evaluate(self, symbol_table):
         ev = self.children[0].evaluate(symbol_table)
-        if(ev[1] != 'String'):
+        if(ev[1] != 'gnirtS'):
             if(ev[0]):
                 self.children[1].evaluate(symbol_table)
             else:
                 if(self.children[2]):
                     self.children[2].evaluate(symbol_table)
         else:
-            raise ValueError('If does not accept string')
+            raise ValueError('If does not accept gnirtS')
 
 
 class Else(Node):
