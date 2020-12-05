@@ -1,6 +1,6 @@
-# Reverse Language
+# AILUJ Language
 
-My own language with reserved characters in reverse to the usually used in programming languages.
+My own language with JULIA language reserved characters in reverse.
 
 ## EBNF
 
