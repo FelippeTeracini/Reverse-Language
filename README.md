@@ -28,3 +28,7 @@ My own language with JULIA language reserved characters in reverse.
         BOOLEAN = "eurt" | "eslaf";
         LETTER = ( a | ... | z | A | ... | Z ) ;
         DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 ) ;
+        
+# SYNTATIC DIAGRAM
+
+![Alt text](DS.png)
